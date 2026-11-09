@@ -1,0 +1,69 @@
+/* ============================================================
+   UPCOMING LISTS
+   ============================================================ */
+.upcoming-list { display: flex; flex-direction: column; gap: 10px; }
+.upcoming-year { max-height: 384px; overflow-y: auto; padding-right: 8px; padding-bottom: 8px; }
+
+.upcoming-group {
+    background: rgba(30, 41, 59, 0.5);
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-md);
+    padding: 10px;
+    cursor: pointer;
+    transition: border-color var(--transition-fast);
+}
+.upcoming-group:hover { border-color: var(--border-strong); }
+.upcoming-group-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--accent-emerald);
+    border-bottom: 1px solid rgba(51, 65, 85, 0.5);
+    padding-bottom: 4px;
+    margin-bottom: 6px;
+}
+.upcoming-group-header .hint { color: var(--text-faint); font-weight: 400; }
+.upcoming-item { display: flex; justify-content: space-between; align-items: center; gap: 6px; padding: 2px 0; }
+.upcoming-item-title { font-size: 13px; color: var(--text-secondary); font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.upcoming-item-title.sm { font-size: 12px; color: var(--text-muted); }
+.upcoming-item-badge {
+    font-size: 10px;
+    padding: 1px 8px;
+    border-radius: var(--radius-sm);
+    color: #fff;
+    flex-shrink: 0;
+}
+.upcoming-item-badge.sm { font-size: 9px; padding: 1px 6px; }
+
+.upcoming-month-group { margin-bottom: 16px; }
+.upcoming-month-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--accent-emerald);
+    position: sticky;
+    top: 0;
+    background: var(--bg-panel);
+    padding: 4px 0;
+    z-index: 10;
+    margin-bottom: 6px;
+}
+.upcoming-day {
+    background: rgba(30, 41, 59, 0.4);
+    border: 1px solid rgba(51, 65, 85, 0.5);
+    border-radius: var(--radius-md);
+    padding: 10px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    transition: border-color var(--transition-fast);
+}
+.upcoming-day:hover { border-color: var(--border-strong); }
+.upcoming-day-header {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-secondary);
+    border-bottom: 1px solid rgba(51, 65, 85, 0.5);
+    padding-bottom: 4px;
+    margin-bottom: 6px;
+}

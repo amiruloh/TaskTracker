@@ -1,0 +1,207 @@
+/* ============================================================
+   LAYOUT — Grid Dashboard & Master-Detail
+   ============================================================ */
+
+body.app-body {
+    margin: 0;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    display: grid;
+    /* Kiri: 300px | Tengah: Fleksibel | Kanan: 420px */
+    grid-template-columns: 300px minmax(500px, 1fr) 420px; 
+    background: var(--bg-app);
+    color: var(--text-primary);
+    font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+/* ============================================================
+   PANEL UMUM
+   ============================================================ */
+.panel {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: var(--bg-panel);
+}
+
+/* Kolom Kiri (Form & Kategori) */
+.panel-left {
+    padding: 20px;
+    overflow-y: auto;
+    border-right: 1px solid var(--border-subtle);
+    background: rgba(15, 23, 42, 0.3);
+}
+
+/* Kolom Tengah (Jadwal & Detail) */
+.panel-middle {
+    padding: 0;
+    border-right: 1px solid var(--border-subtle);
+    background: var(--bg-app);
+    display: grid;
+    /* KUNCI: Panel detail langsung diberi lebar 350px dari awal */
+    grid-template-columns: 1fr 1fr; 
+    overflow: hidden;
+}
+
+/* Area Daftar Tugas di Tengah */
+.middle-list-area {
+    padding: 24px;
+    overflow-y: auto;
+    height: 100vh;
+}
+
+/* Area Panel Detail Tugas */
+.task-detail-panel {
+    background: rgba(30, 41, 59, 0.4);
+    border-left: 1px solid var(--border-subtle);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.task-detail-header {
+    padding: 20px;
+    border-bottom: 1px solid var(--border-default);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(15, 23, 42, 0.5);
+}
+
+.task-detail-content {
+    padding: 24px;
+    overflow-y: auto;
+    flex: 1;
+}
+
+/* Kolom Kanan (Analytics & Log) */
+.panel-right {
+    padding: 20px;
+    overflow-y: auto;
+    background: rgba(15, 23, 42, 0.5);
+}
+
+/* ============================================================
+   HEADER & TITLE
+   ============================================================ */
+.panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(51, 65, 85, 0.3);
+}
+
+.app-title {
+    font-size: 20px;
+    font-weight: 800;
+    margin: 0;
+    background: linear-gradient(90deg, var(--accent-emerald), var(--accent-cyan));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    letter-spacing: -0.5px;
+}
+
+.app-subtitle {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin: 2px 0 0;
+    font-weight: 500;
+}
+
+.section-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0 0 16px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.section-spaced {
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border-subtle);
+}
+
+/* ============================================================
+   TASK DETAIL PANEL CONTENT (Untuk JS)
+   ============================================================ */
+.detail-group {
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px dashed var(--border-default);
+}
+
+.detail-group:last-child {
+    border-bottom: none;
+}
+
+.detail-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0 0 10px 0;
+    line-height: 1.3;
+}
+
+.detail-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-muted);
+    margin: 0 0 4px 0;
+    font-weight: 600;
+}
+
+.detail-value {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin: 0;
+    line-height: 1.5;
+    background: rgba(15, 23, 42, 0.4);
+    padding: 10px 12px;
+    border-radius: var(--radius-md);
+    border: 1px solid rgba(51, 65, 85, 0.5);
+}
+
+.text-amber-400 { color: var(--accent-amber); }
+.text-emerald-400 { color: var(--accent-emerald); }
+
+/* ============================================================
+   RESPONSIVE (Tablet & Mobile)
+   ============================================================ */
+@media (max-width: 1400px) {
+    body.app-body { grid-template-columns: 280px minmax(400px, 1fr) 380px; }
+    .panel-middle { grid-template-columns: 1fr 300px; }
+}
+
+@media (max-width: 1200px) {
+    body.app-body { grid-template-columns: 280px 1fr; }
+    .panel-right { display: none; }
+}
+
+@media (max-width: 768px) {
+    body.app-body {
+        display: flex;
+        flex-direction: column;
+        height: auto;
+        overflow-y: auto;
+    }
+    .panel { height: auto; overflow-y: visible; }
+    .panel-left { border-right: none; border-bottom: 1px solid var(--border-subtle); }
+    .panel-middle {
+        display: flex;
+        flex-direction: column;
+        border-right: none;
+    }
+    .middle-list-area { height: auto; padding: 16px; }
+    .task-detail-panel { border-left: none; border-top: 1px solid var(--border-subtle); height: auto; }
+}

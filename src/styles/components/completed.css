@@ -1,0 +1,64 @@
+/* ============================================================
+   COMPLETED LOG
+   ============================================================ */
+.completed-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow-y: auto;
+    flex: 1;
+    padding-right: 8px;
+}
+.completed-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    padding: 10px;
+    background: rgba(30, 41, 59, 0.3);
+    border: 1px solid rgba(51, 65, 85, 0.3);
+    border-radius: var(--radius-md);
+    transition: border-color var(--transition-fast);
+}
+.completed-item:hover { border-color: var(--border-default); }
+.completed-info { min-width: 0; flex: 1; }
+.completed-title {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    text-decoration: line-through;
+    text-decoration-color: var(--text-faint);
+    margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.completed-title .date-badge {
+    font-size: 9px;
+    color: var(--accent-amber);
+    margin-left: 4px;
+    text-decoration: none;
+}
+.completed-meta { font-size: 10px; color: var(--text-faint); margin: 2px 0 0; }
+.completed-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+.completed-duration {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--accent-emerald);
+    background: rgba(16, 185, 129, 0.1);
+    padding: 2px 8px;
+    border-radius: var(--radius-sm);
+}
+.undo-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-faint);
+    cursor: pointer;
+    padding: 2px;
+    border-radius: var(--radius-sm);
+    opacity: 0;
+    transition: opacity var(--transition-fast), color var(--transition-fast);
+}
+.completed-item:hover .undo-btn { opacity: 1; }
+.undo-btn:hover { color: #f87171; }
+.undo-btn svg { width: 14px; height: 14px; }

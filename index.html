@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Activity — Amiruloh Personal Schedule</title>
+    <!-- Pastikan file CSS utama mengarah ke folder src -->
+    <link rel="stylesheet" href="./src/styles/main.css">
+</head>
+<body class="app-body">
+
+    <!-- ===== TOAST CONTAINER ===== -->
+    <div id="toastContainer" class="toast-container" aria-live="polite"></div>
+
+    <!-- ===== LEFT PANEL ===== -->
+    <aside class="panel panel-left">
+        <header class="panel-header">
+            <div>
+                <h1 class="app-title">My Activity</h1>
+                <p class="app-subtitle">Amiruloh Personal Schedule</p>
+            </div>
+            <div class="header-actions">
+                <button id="btnExport" class="icon-btn" title="Export JSON" aria-label="Export JSON">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                </button>
+                <label class="icon-btn" title="Import JSON" aria-label="Import JSON">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
+                    <input type="file" id="importFile" accept=".json" hidden>
+                </label>
+            </div>
+        </header>
+
+        <!-- KATEGORI -->
+        <section class="card">
+            <div class="card-header">
+                <h2 class="card-title">Kategori</h2>
+                <button id="btnAddCategory" class="link-btn">+ Tambah</button>
+            </div>
+            <div id="categoryList" class="chip-list"></div>
+        </section>
+
+        <!-- FORM TUGAS -->
+        <section class="card card-grow">
+            <div class="card-header">
+                <h2 class="card-title">Buat Tugas Baru</h2>
+            </div>
+            <form id="taskForm" class="form-stack">
+                <div class="form-field">
+                    <label for="tName" class="form-label">Nama Tugas</label>
+                    <input type="text" id="tName" required class="form-input" placeholder="Misal: Rapat Evaluasi">
+                </div>
+                <div class="form-field">
+                    <label for="tCategory" class="form-label">Kategori</label>
+                    <select id="tCategory" required class="form-input"></select>
+                </div>
+                <div class="form-field">
+                    <label for="tNotes" class="form-label">Catatan / Target</label>
+                    <textarea id="tNotes" rows="2" class="form-input form-textarea" placeholder="Opsional..."></textarea>
+                </div>
+                <div class="form-field">
+                    <label for="tDeadline" class="form-label">Tenggat Waktu (Opsional)</label>
+                    <input type="datetime-local" id="tDeadline" class="form-input">
+                </div>
+
+                <div class="schedule-box">
+                    <label class="schedule-title">📅 / 🔄 Jadwal</label>
+                    <select id="tRepeatType" class="form-input form-input-sm" data-toggle-repeat>
+                        <option value="once">Sekali Jalan (Hari Ini)</option>
+                        <option value="specific_date">Tanggal Tertentu (Satu Kali)</option>
+                        <option value="monthly_date">Setiap Bulan di Tanggal Tertentu</option>
+                        <option value="monthly_multiple">Setiap Bulan di Beberapa Tanggal</option>
+                        <option value="daily">Setiap Hari</option>
+                        <option value="interval">Beberapa Hari Sekali</option>
+                        <option value="days">Hari Tertentu dalam Seminggu</option>
+                    </select>
+
+                    <div id="configSpecificDate" class="repeat-config" data-repeat="specific_date">
+                        <span>Pilih Tanggal:</span>
+                        <input type="date" id="tSpecificDate" class="form-input form-input-xs">
+                    </div>
+                    <div id="configMonthlyDate" class="repeat-config" data-repeat="monthly_date">
+                        <span>Setiap tanggal:</span>
+                        <input type="number" id="tMonthDay" min="1" max="31" value="1" class="form-input form-input-xs text-center">
+                    </div>
+                    <div id="configMonthlyMultiple" class="repeat-config repeat-config-col" data-repeat="monthly_multiple">
+                        <label class="form-label-xs">Tanggal (pisahkan dengan koma):</label>
+                        <input type="text" id="tMonthDays" placeholder="contoh: 1, 15, 25" class="form-input form-input-sm">
+                    </div>
+                    <div id="configInterval" class="repeat-config" data-repeat="interval">
+                        <span>Setiap</span>
+                        <input type="number" id="tInterval" min="2" value="2" class="form-input form-input-xs text-center">
+                        <span>hari</span>
+                    </div>
+                    <div id="configDays" class="repeat-config repeat-days" data-repeat="days">
+                        <label><input type="checkbox" value="1" class="day-cb"> Sen</label>
+                        <label><input type="checkbox" value="2" class="day-cb"> Sel</label>
+                        <label><input type="checkbox" value="3" class="day-cb"> Rab</label>
+                        <label><input type="checkbox" value="4" class="day-cb"> Kam</label>
+                        <label><input type="checkbox" value="5" class="day-cb"> Jum</label>
+                        <label><input type="checkbox" value="6" class="day-cb"> Sab</label>
+                        <label><input type="checkbox" value="0" class="day-cb"> Min</label>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block">Simpan Tugas</button>
+            </form>
+
+            <div class="card-footer-divider">
+                <button id="btnManageRecurring" class="btn btn-ghost btn-block btn-sm">⚙️ Kelola Tugas Berulang Aktif</button>
+            </div>
+        </section>
+    </aside>
+
+    <!-- ===== MIDDLE PANEL (Master-Detail Layout) ===== -->
+    <main class="panel panel-middle">
+        <!-- Area KIRI: Daftar Tugas -->
+        <div class="middle-list-area">
+            <section>
+                <div class="planner-toolbar">
+                    <h2 class="section-title">📅 Jadwal Harian</h2>
+                    <div class="toolbar-controls">
+                        <label class="toggle-chip">
+                            <input type="checkbox" id="hideRecurring">
+                            <span>Hanya Sekali</span>
+                        </label>
+                        <select id="categoryFilter" class="form-input form-input-sm">
+                            <option value="all">Semua Kategori</option>
+                        </select>
+                        <input type="date" id="plannerDate" class="form-input form-input-sm planner-date">
+                    </div>
+                </div>
+                <div id="taskList" class="task-list"></div>
+                <div id="emptyTask" class="empty-state hidden">
+                    <span class="empty-emoji">🍃</span>
+                    <p id="emptyTaskText">Tidak ada tugas untuk tanggal ini.</p>
+                </div>
+            </section>
+
+            <section class="section-spaced">
+                <h2 class="section-title">🚀 Upcoming (7 Hari)</h2>
+                <div id="upcomingList" class="upcoming-list"></div>
+            </section>
+
+            <section class="section-spaced">
+                <h2 class="section-title">🗓️ Upcoming (1 Tahun)</h2>
+                <div id="upcomingYearList" class="upcoming-list upcoming-year"></div>
+            </section>
+        </div>
+
+        <!-- Area KANAN: Detail Tugas (Muncul saat di-klik) -->
+        <aside id="taskDetailPanel" class="task-detail-panel">
+            <div class="task-detail-header">
+                <h2 class="section-title">Detail Tugas</h2>
+                <button id="btnCloseDetail" class="icon-btn" title="Tutup Detail">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+            <div id="taskDetailContent" class="task-detail-content">
+                <!-- Konten detail akan di-render oleh JS -->
+            </div>
+        </aside>
+    </main>
+
+    <!-- ===== RIGHT PANEL ===== -->
+    <section class="panel panel-right">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">Activity Heatmap (1 Tahun)</h2>
+                <div class="heatmap-legend">
+                    <span>Kurang</span>
+                    <div class="heat-cell heat-0"></div>
+                    <div class="heat-cell heat-1"></div>
+                    <div class="heat-cell heat-2"></div>
+                    <div class="heat-cell heat-3"></div>
+                    <div class="heat-cell heat-4"></div>
+                    <span>Lebih</span>
+                </div>
+            </div>
+            <div class="heatmap-scroll">
+                <div id="heatmapGrid" class="heatmap-grid"></div>
+            </div>
+            <p class="heatmap-caption">Intensitas berdasarkan total durasi (menit) — dihitung dari tanggal penyelesaian</p>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title mb-3">Statistik & Pencapaian</h2>
+            <div id="statsGrid" class="stats-grid"></div>
+            <div class="score-box">
+                <div class="score-header">
+                    <span>Skor Penyelesaian</span>
+                    <span id="scoreText" class="score-value">0%</span>
+                </div>
+                <div class="score-track">
+                    <div id="scoreBar" class="score-bar"></div>
+                </div>
+                <p id="scoreLabel" class="score-label"></p>
+            </div>
+        </div>
+
+        <div class="card card-grow card-scroll">
+            <h2 class="card-title mb-3">Completed Log</h2>
+            <div id="completedList" class="completed-list"></div>
+        </div>
+    </section>
+
+    <!-- ===== MODALS ===== -->
+
+    <!-- Modal Kategori -->
+    <div id="catModal" class="modal hidden-modal" role="dialog" aria-modal="true">
+        <div class="modal-box">
+            <header class="modal-header">
+                <h3>Kategori Baru</h3>
+                <button class="modal-close" data-close-modal="catModal">&times;</button>
+            </header>
+            <div class="modal-body">
+                <div class="form-field">
+                    <label class="form-label">Nama Kategori</label>
+                    <input type="text" id="cName" class="form-input">
+                </div>
+                <div class="form-field">
+                    <label class="form-label">Pilih Warna</label>
+                    <div id="colorPicker" class="color-picker">
+                        <button type="button" class="color-swatch bg-blue-500" data-color="#3b82f6"></button>
+                        <button type="button" class="color-swatch bg-emerald-500 selected" data-color="#10b981"></button>
+                        <button type="button" class="color-swatch bg-violet-500" data-color="#8b5cf6"></button>
+                        <button type="button" class="color-swatch bg-pink-500" data-color="#ec4899"></button>
+                        <button type="button" class="color-swatch bg-amber-500" data-color="#f59e0b"></button>
+                        <button type="button" class="color-swatch bg-red-500" data-color="#ef4444"></button>
+                        <button type="button" class="color-swatch bg-slate-500" data-color="#64748b"></button>
+                    </div>
+                </div>
+            </div>
+            <footer class="modal-footer">
+                <button class="btn btn-ghost" data-close-modal="catModal">Batal</button>
+                <button id="btnSaveCategory" class="btn btn-primary">Simpan</button>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Modal Recurring -->
+    <div id="recurringModal" class="modal hidden-modal" role="dialog" aria-modal="true">
+        <div class="modal-box modal-box-wide">
+            <header class="modal-header">
+                <h3>Siklus Tugas Berulang</h3>
+                <button class="modal-close" data-close-modal="recurringModal">&times;</button>
+            </header>
+            <div id="recurringList" class="modal-body modal-body-scroll"></div>
+            <footer class="modal-footer modal-footer-info">
+                <p>Menghapus siklus tidak akan menghapus tugas yang sudah selesai atau sedang berjalan.</p>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Modal Time Log -->
+    <div id="timeModal" class="modal hidden-modal" role="dialog" aria-modal="true">
+        <div class="modal-box modal-box-sm">
+            <div class="modal-body text-center">
+                <div class="modal-icon">🏁</div>
+                <h3 class="modal-title">Tugas Selesai!</h3>
+                <p class="modal-desc">Berapa menit waktu yang kamu habiskan?</p>
+                <p id="finishTaskInfo" class="modal-info"></p>
+                <input type="number" id="finishDuration" min="1" value="30" class="form-input form-input-lg text-center">
+                <div class="form-field text-left mt-3">
+                    <label for="finishDate" class="form-label-xs">Tanggal Penyelesaian (bisa backdate)</label>
+                    <input type="date" id="finishDate" class="form-input">
+                </div>
+                <div class="modal-actions">
+                    <button id="btnCancelFinish" class="btn btn-ghost">Batal</button>
+                    <button id="btnConfirmFinish" class="btn btn-primary">Catat Log</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Confirm (generic) -->
+    <div id="confirmModal" class="modal hidden-modal" role="dialog" aria-modal="true">
+        <div class="modal-box modal-box-sm">
+            <div class="modal-body text-center">
+                <h3 id="confirmTitle" class="modal-title">Konfirmasi</h3>
+                <p id="confirmMessage" class="modal-desc mt-2"></p>
+                <div class="modal-actions mt-4">
+                    <button id="btnConfirmCancel" class="btn btn-ghost">Batal</button>
+                    <button id="btnConfirmOk" class="btn btn-danger">Ya, Lanjutkan</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Prompt (generic) -->
+    <div id="promptModal" class="modal hidden-modal" role="dialog" aria-modal="true">
+        <div class="modal-box modal-box-sm">
+            <div class="modal-body">
+                <h3 id="promptTitle" class="modal-title mb-3">Edit</h3>
+                <input type="text" id="promptInput" class="form-input">
+                <div class="modal-actions mt-4">
+                    <button id="btnPromptCancel" class="btn btn-ghost">Batal</button>
+                    <button id="btnPromptOk" class="btn btn-primary">Simpan</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JANGAN LUPA: Script menggunakan type="module" -->
+    <script type="module" src="./src/main.js"></script>
+</body>
+</html>

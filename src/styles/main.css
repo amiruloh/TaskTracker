@@ -1,0 +1,15 @@
+/* ============================================================
+   MAIN — Entry point stylesheet
+   Urutan import penting:
+   1. tokens → variable harus ada duluan
+   2. base → reset
+   3. utilities → helper
+   4. layout → struktur
+   5. components → bagian-bagian UI
+   ============================================================ */
+
+@import './tokens.css';
+@import './base.css';
+@import './utilities.css';
+@import './layout.css';
+@import './components/index.css';

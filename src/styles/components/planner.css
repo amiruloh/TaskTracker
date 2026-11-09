@@ -1,0 +1,53 @@
+/* ============================================================
+   PLANNER TOOLBAR
+   ============================================================ */
+.planner-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    background: var(--bg-card-solid);
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-lg);
+    padding: 16px 20px;
+    margin-bottom: 24px;
+    box-shadow: var(--shadow-sm);
+}
+
+/* KUNCI PERBAIKAN: Memastikan kontrol sejajar & tidak ada tinggi berlebih */
+.toolbar-controls {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: nowrap; 
+}
+
+/* Memperbaiki input tanggal & select agar tingginya sama */
+.toolbar-controls .form-input-sm {
+    height: 36px;
+    padding: 0 12px;
+}
+
+.toggle-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: 36px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    background: var(--bg-input);
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-md);
+    padding: 0 12px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.planner-date {
+    color: var(--accent-emerald);
+    font-weight: 600;
+    border-color: var(--accent-emerald);
+    background: rgba(16, 185, 129, 0.1);
+}

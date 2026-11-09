@@ -1,0 +1,70 @@
+/* ============================================================
+   BUTTON
+   ============================================================ */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 9px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: background var(--transition-fast),
+              color var(--transition-fast),
+              border-color var(--transition-fast),
+              transform var(--transition-fast);
+  font-family: inherit;
+}
+
+.btn:active { transform: scale(0.97); }
+.btn-block { width: 100%; }
+.btn-sm { padding: 7px 12px; font-size: 12px; }
+
+/* Varian */
+.btn-primary { background: var(--accent-emerald); color: #fff; box-shadow: 0 4px 14px rgba(16, 185, 129, 0.2); }
+.btn-primary:hover { background: var(--accent-emerald-hover); }
+
+.btn-danger { background: var(--accent-red); color: #fff; }
+.btn-danger:hover { background: #f87171; }
+
+.btn-ghost { background: var(--bg-card-solid); color: var(--text-secondary); border-color: var(--border-default); }
+.btn-ghost:hover { background: var(--border-default); color: var(--text-primary); }
+
+.btn-warn { background: var(--accent-amber); color: #1e293b; font-weight: 600; }
+.btn-warn:hover { background: #fbbf24; }
+
+/* Icon button */
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  background: var(--bg-card-solid);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: background var(--transition-fast),
+              color var(--transition-fast),
+              border-color var(--transition-fast);
+}
+.icon-btn:hover { background: var(--border-default); color: var(--text-primary); }
+.icon-btn svg { width: 16px; height: 16px; }
+.icon-btn input[type="file"] { display: none; }
+
+/* Link button */
+.link-btn {
+  background: transparent;
+  border: none;
+  color: var(--accent-emerald);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+}
+.link-btn:hover { color: var(--accent-emerald-hover); }

@@ -1,0 +1,36 @@
+/* ============================================================
+   RESET & BASE
+   ============================================================ */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body.app-body {
+  margin: 0;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  display: grid;
+  background: var(--bg-app);
+  color: var(--text-primary);
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--accent-emerald);
+  outline-offset: 2px;
+}
+
+*::-webkit-scrollbar { width: 6px; height: 6px; }
+*::-webkit-scrollbar-track { background: transparent; }
+*::-webkit-scrollbar-thumb {
+  background-color: #475569;
+  border-radius: 10px;
+}
+*::-webkit-scrollbar-thumb:hover { background-color: #64748b; }
